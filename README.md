@@ -1,1 +1,78 @@
-# CalibPrompt
+# CalibPrompt: Calibration-Aware Prompt Learning for Medical Vision-Language Models
+
+[![Paper](https://img.shields.io/badge/Paper-BMVC%202025-red)](https://arxiv.org/abs/)
+[![Code](https://img.shields.io/badge/Code-Coming%20Soon-yellow)](https://github.com/iabh1shekbasu/CalibPrompt)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**Accepted at the British Machine Vision Conference (BMVC) 2025 — Core A-Ranked Computer Vision Conference**  
+🏆 **Best Poster Award at the MBZUAI Research Showcase April, 2025**
+
+---
+
+## 👥 Authors
+
+**Abhishek Basu**¹, **Fahad Shamshad**¹, **Ashshak Sharifdeen**¹, **Karthik Nandakumar**¹'², **Muhammad Haris Khan**¹
+
+¹ Mohamed Bin Zayed University of Artificial Intelligence, UAE  
+² Michigan State University, USA
+
+---
+
+## 🧠 Abstract
+
+Medical Vision-Language Models (Med-VLMs) demonstrate strong zero-shot performance on clinical tasks but are often miscalibrated, undermining trust in high-stakes settings.  
+We propose **CalibPrompt**, the first framework that enhances Med-VLM calibration during prompt tuning by introducing two novel losses:
+- **SMAC**: Smoothed Accuracy and Confidence Matching Loss
+- **Angular Separation Loss**: Encourages textual feature diversity
+
+CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, MedCLIP, QuiltNet, BioMedCLIP) and **five medical datasets** (COVIDX, RSNA18, Kather, PanNuke, DigestPath), all while tuning only **0.1%** of model parameters.
+
+---
+
+## 🔑 Key Features
+
+
+---
+
+## 🚧 Repository Status
+
+**This repository is currently under development. Code, models, and documentation will be uploaded soon.**
+
+- [x] Paper accepted to BMVC 2025 🎉  
+
+ 
+
+**Expected Release**: Coming Soon
+
+
+---
+
+## 📖 Citation
+
+If you find this work useful for your research, please cite:
+
+```bibtex
+@inproceedings{basu2025calibprompt,
+  title={CalibPrompt: Calibration-Aware Prompt Learning for Medical Vision-Language Models},
+  author={Basu, Abhishek and Shamshad, Fahad and Sharifeen, Ashshak and Nandakumar, Karthik and Khan, Muhammad Haris},
+  booktitle={British Machine Vision Conference (BMVC)},
+  year={2025}
+}
+```
+
+## 📧 Contact
+
+For questions about this work, please contact:
+
+- **Abhishek Basu**: abhishek.basu@mbzuai.ac.ae
+- **Fahad Shamshad**: fahad.shamshad@mbzuai.ac.ae
+
+## 📄 License
+
+This project will be released under the MIT License. See [LICENSE](LICENSE) file for details.
+
+---
+
+**Note**: This repository is associated with the paper accepted at BMVC 2025. Stay tuned for the code release!
+
+
