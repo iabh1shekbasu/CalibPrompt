@@ -53,10 +53,22 @@ If you find this work useful for your research, please cite:
 
 ```bibtex
 @inproceedings{basu2025calibprompt,
-  title={CalibPrompt: Calibration-Aware Prompt Learning for Medical Vision-Language Models},
+  title={Calibration-Aware Prompt Learning for Medical Vision-Language Models},
   author={Basu, Abhishek and Shamshad, Fahad and Sharifdeen, Ashshak and Nandakumar, Karthik and Khan, Muhammad Haris},
   booktitle={British Machine Vision Conference (BMVC)},
   year={2025}
+}
+```
+and
+```bibtex
+@thesis{basu2025calibration,
+  title        = {Calibration-Aware Prompt Learning for Medical Vision-Language Models},
+  author       = {Basu, Abhishek},
+  type         = {Master’s thesis},
+  institution  = {Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI)},
+  year         = {2025},
+  location     = {Abu Dhabi, United Arab Emirates},
+  department   = {Computer Vision}
 }
 ```
 
