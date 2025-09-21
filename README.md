@@ -1,11 +1,18 @@
-# CalibPrompt: Calibration-Aware Prompt Learning for Medical Vision-Language Models
+# Calibration-Aware Prompt Learning for Medical Vision-Language Models
 
-[![Paper](https://img.shields.io/badge/Paper-BMVC%202025-red)](https://arxiv.org/abs/)
+[![Paper](https://img.shields.io/badge/Paper-BMVC%202025-red)](https://arxiv.org/abs/2509.15226)
+[![Paper](https://img.shields.io/badge/Paper-ICCVW%202025-red)](https://arxiv.org/abs/2509.15226)
 [![Code](https://img.shields.io/badge/Code-Coming%20Soon-yellow)](https://github.com/iabh1shekbasu/CalibPrompt)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Accepted at the British Machine Vision Conference (BMVC) 2025 — Core A-Ranked Computer Vision Conference**  
-🏆 **Best Poster Award at the MBZUAI Research Showcase April, 2025**
+## 🏆 Awards & Recognition
+
+✅ **Accepted** at **British Machine Vision Conference (BMVC) 2025** — *Core A-Ranked Computer Vision Conference*
+
+✅ **Accepted** at **Safe and Trustworthy Multimodal AI Systems Workshop (SafeMM-AI)** @ ICCV 2025 — *Core A\*-Ranked Computer Vision Conference*
+
+🏆 **Best Poster Award** at MBZUAI Research Showcase, April 2025
+
 
 ---
 
@@ -29,20 +36,21 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Me
 
 ---
 
-## 🔑 Key Features
-
-
----
-
 ## 🚧 Repository Status
 
 **This repository is currently under development. Code, models, and documentation will be uploaded soon.**
 
-- [x] Paper accepted to BMVC 2025 🎉  
+## 📅 Timeline & Milestones
 
- 
+- **[19th September 2025]** 📄 Paper released on ArXiv 🎉  
+- **[19th September 2025]** ✅ Short paper accepted to SafeMM-AI Workshop @ ICCV 2025 🎉  
+- **[25th July 2025]** ✅ Paper accepted to BMVC 2025 🎉  
+- **[17th April 2025]** 🏆 Best Poster Award at MBZUAI Research Showcase 🎉  
 
-**Expected Release**: Coming Soon
+---
+
+## Code Release: 
+🔜 Coming Soon
 
 
 ---
