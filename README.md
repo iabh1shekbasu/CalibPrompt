@@ -42,8 +42,8 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Me
 
 ## 📅 Timeline & Milestones
 
-- **[19th September 2025]** 📄 Paper released on ArXiv 🎉  
 - **[19th September 2025]** ✅ Short paper accepted to SafeMM-AI Workshop @ ICCV 2025 🎉  
+- **[18th September 2025]** 📄 Paper released on ArXiv 🎉  
 - **[25th July 2025]** ✅ Paper accepted to BMVC 2025 🎉  
 - **[17th April 2025]** 🏆 Best Poster Award at MBZUAI Research Showcase 🎉  
 
