@@ -50,8 +50,9 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Me
 ---
 
 ## Code Release: 
-🔜 Coming Soon
 
+Implementations of the proposed loss functions for Plug-and-Play training are now available.
+🔜 Full code release coming soon.
 
 ---
 
