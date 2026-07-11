@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CalibPrompt · Calibration-Aware Prompt Learning for Medical Vision-Language Models (BMVC 2025)</title>
+<meta name="description" content="CalibPrompt (BMVC 2025): the first framework to calibrate Medical Vision-Language Models during prompt tuning, via the SMAC and Angular Separation losses.">
+<meta property="og:title" content="CalibPrompt — Calibration-Aware Prompt Learning for Medical Vision-Language Models">
+<meta property="og:description" content="BMVC 2025. Calibrating Med-VLMs during prompt tuning with SMAC + Angular Separation losses.">
+<meta property="og:image" content="static/method.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1e293b; --muted:#64748b; --line:#e2e8f0;
+    --card:#f8fafc; --accent:#4f46e5; --accent-2:#7c3aed; --link:#2563eb;
+    --pill:#eef2ff; --pill-fg:#4338ca;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0b1120; --fg:#e2e8f0; --muted:#94a3b8; --line:#1e293b;
+      --card:#111827; --accent:#818cf8; --accent-2:#a78bfa; --link:#93c5fd;
+      --pill:#1e1b4b; --pill-fg:#c7d2fe; }
+  }
+  :root[data-theme="light"]{ --bg:#ffffff; --fg:#1e293b; --muted:#64748b; --line:#e2e8f0; --card:#f8fafc; --accent:#4f46e5; --accent-2:#7c3aed; --link:#2563eb; --pill:#eef2ff; --pill-fg:#4338ca; }
+  :root[data-theme="dark"]{ --bg:#0b1120; --fg:#e2e8f0; --muted:#94a3b8; --line:#1e293b; --card:#111827; --accent:#818cf8; --accent-2:#a78bfa; --link:#93c5fd; --pill:#1e1b4b; --pill-fg:#c7d2fe; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  header.hero{padding:56px 20px 30px;text-align:center;
+    background:radial-gradient(1200px 400px at 50% -100px, color-mix(in srgb,var(--accent) 14%, transparent), transparent);}
+  h1{font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.2;margin:.2em 0 .1em;letter-spacing:-.02em}
+  .venue{display:inline-block;margin:6px 0 14px;font-weight:700;color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 40%, var(--line));border-radius:999px;padding:4px 14px;font-size:.85rem}
+  .authors{font-size:1.05rem;margin:.4em auto;max-width:800px}
+  .authors a{font-weight:600}
+  .affil{color:var(--muted);font-size:.95rem;margin:.3em auto .2em;max-width:760px}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:22px 0 6px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;
+    background:var(--fg);color:var(--bg);font-weight:600;font-size:.92rem;border:1px solid transparent}
+  .btn:hover{text-decoration:none;opacity:.9}
+  .btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+  .awards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px auto 4px;max-width:800px}
+  .pill{background:var(--pill);color:var(--pill-fg);border-radius:999px;padding:6px 13px;font-size:.83rem;font-weight:600;border:1px solid color-mix(in srgb,var(--pill-fg) 20%, transparent)}
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  h2{font-size:1.5rem;letter-spacing:-.01em;margin:.2em 0 .5em;display:flex;align-items:center;gap:.4em}
+  h2 .bar{width:5px;height:1.05em;background:linear-gradient(var(--accent),var(--accent-2));border-radius:3px;display:inline-block}
+  figure{margin:14px 0}
+  figure img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff}
+  figcaption{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:center}
+  .lead{font-size:1.05rem}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h3{margin:.1em 0 .3em;font-size:1.05rem}
+  .card p{margin:.2em 0;color:var(--fg)}
+  .abstract{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;font-size:1.02rem}
+  .tablewrap{overflow-x:auto;margin-top:8px}
+  table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+  th,td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--muted);font-weight:700}
+  tbody tr:last-child td{font-weight:700}
+  .win{color:#16a34a}
+  pre{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-size:.86rem;position:relative}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .copy{position:absolute;top:10px;right:10px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:5px 11px;font-size:.8rem;cursor:pointer;font-weight:600}
+  .copy:active{transform:translateY(1px)}
+  footer{padding:30px 0 60px;color:var(--muted);font-size:.92rem;text-align:center;border-top:1px solid var(--line)}
+  .themebtn{position:fixed;top:14px;right:14px;background:var(--card);border:1px solid var(--line);color:var(--fg);
+    border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:1.1rem}
+</style>
+</head>
+<body>
+<button class="themebtn" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle light/dark">◐</button>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="venue">BMVC 2025 · SafeMM-AI @ ICCV 2025</span>
+    <h1>Calibration-Aware Prompt Learning for<br>Medical Vision-Language Models</h1>
+    <p class="authors">
+      <a href="https://iabh1shekbasu.github.io">Abhishek Basu</a><sup>1</sup>,
+      <a href="https://scholar.google.com/citations?user=d7QL4wkAAAAJ&hl=en">Fahad Shamshad</a><sup>1</sup>,
+      <a href="https://scholar.google.com/citations?user=rd9zSX8AAAAJ&hl=en">Ashshak Sharifdeen</a><sup>1</sup>,
+      <a href="https://www.cse.msu.edu/~nandakum/">Karthik Nandakumar</a><sup>1,2</sup>,
+      <a href="https://m-haris-khan.com">Muhammad Haris Khan</a><sup>1</sup>
+    </p>
+    <p class="affil"><span style="white-space:nowrap"><sup>1</sup> Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI),&nbsp;UAE</span> &nbsp;·&nbsp; <span style="white-space:nowrap"><sup>2</sup> Michigan State University (MSU),&nbsp;USA</span></p>
+    <div class="btns">
+      <a class="btn" href="https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_1062/paper.pdf">📄 Paper (BMVC)</a>
+      <a class="btn ghost" href="https://arxiv.org/abs/2509.15226">arXiv</a>
+      <a class="btn ghost" href="https://github.com/iabh1shekbasu/CalibPrompt">💻 Code</a>
+      <a class="btn ghost" href="#bibtex">BibTeX</a>
+    </div>
+    <div class="awards">
+      <span class="pill">🎓 BMVC 2025</span>
+      <span class="pill">🛡️ SafeMM-AI @ ICCV 2025</span>
+      <span class="pill">🏆 Best Poster — MBZUAI Research Showcase 2025</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="overview" style="border-top:none">
+    <figure>
+      <img src="static/method.png" alt="CalibPrompt overview">
+      <figcaption><b>Overview of CalibPrompt.</b> Learnable prompts are optimized with classification and calibration losses — <b>SMAC</b> and <b>AS</b> — while the image and text encoders stay frozen.</figcaption>
+    </figure>
+  </section>
+
+  <section id="abstract">
+    <h2><span class="bar"></span>Abstract</h2>
+    <p class="abstract">Medical Vision-Language Models (Med-VLMs) have demonstrated remarkable performance across diverse medical imaging tasks by leveraging large-scale image-text pretraining. However, their confidence calibration is largely unexplored, and so remains a significant challenge. Miscalibrated predictions can lead to overconfident errors, undermining clinical trust and decision-making reliability. To address this, we introduce <b>CalibPrompt</b>, the first framework to calibrate Med-VLMs during prompt tuning. CalibPrompt optimizes a small set of learnable prompts with carefully designed calibration objectives under a scarce labeled-data regime. First, we study a regularizer that aligns the smoothed accuracy with the predicted model confidences. Second, we introduce an angular separation loss to maximize textual feature proximity toward improving the reliability of confidence estimates of multimodal Med-VLMs. Extensive experiments on four publicly available Med-VLMs and five diverse medical imaging datasets reveal that CalibPrompt consistently improves calibration without drastically affecting clean accuracy.</p>
+  </section>
+
+  <section id="method">
+    <h2><span class="bar"></span>Method</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>🎯 SMAC</h3>
+        <p><b>Smoothed Accuracy &amp; Confidence Matching.</b> Aligns each class's mean predicted confidence with a <i>smoothed</i> empirical class frequency, tolerating the inherent ambiguity of medical images instead of enforcing overly rigid calibration.</p>
+      </div>
+      <div class="card">
+        <h3>🧭 Angular Separation</h3>
+        <p><b>AS loss.</b> Minimizes the average pairwise cosine similarity of the class text prototypes, spreading them apart to counter the overconfidence that prompt tuning induces.</p>
+      </div>
+    </div>
+    <figure style="margin-top:18px">
+      <img src="static/motivation.png" alt="Motivation: cosine similarity vs calibration error">
+      <figcaption><b>Why are prompt-tuned Med-VLMs miscalibrated?</b> Prompt tuning raises intra-class text-feature similarity (<i>left</i>), inflating confidence (<i>middle</i>); higher similarity correlates with higher calibration error (<i>right</i>).</figcaption>
+    </figure>
+  </section>
+
+  <section id="results">
+    <h2><span class="bar"></span>Results</h2>
+    <p class="lead">CalibPrompt sharply reduces Expected Calibration Error (ECE) versus vanilla CE prompt tuning, across all four Med-VLMs and five datasets — while keeping accuracy intact. All numbers are <b>exactly reproducible</b> from the released code.</p>
+    <figure>
+      <img src="static/results.png" alt="ECE: CalibPrompt vs CE prompt-tuning">
+    </figure>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>ECE (%) ↓</th><th>PLIP<br>PanNuke</th><th>PLIP<br>DigestPath</th><th>QuiltNet<br>PanNuke</th><th>QuiltNet<br>DigestPath</th><th>BioMedCLIP<br>COVID</th><th>BioMedCLIP<br>RSNA18</th></tr></thead>
+        <tbody>
+          <tr><td>CE prompt-tuning</td><td>17.82</td><td>9.50</td><td>19.70</td><td>11.27</td><td>6.61</td><td>7.02</td></tr>
+          <tr><td>CalibPrompt</td><td class="win">2.19</td><td class="win">3.08</td><td class="win">2.47</td><td class="win">0.77</td><td class="win">4.69</td><td class="win">5.74</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure style="margin-top:20px">
+      <img src="static/ablation.png" alt="Ablations over shots and context length">
+      <figcaption><b>Ablations.</b> Accuracy and ECE as a function of the number of shots and prompt context length.</figcaption>
+    </figure>
+  </section>
+
+  <section id="bibtex">
+    <h2><span class="bar"></span>BibTeX</h2>
+    <pre><button class="copy" onclick="copyBib(this)">Copy</button><code id="bib">@inproceedings{Basu_2025_BMVC,
+  author    = {Abhishek Basu and Fahad Shamshad and Ashshak Sharifdeen and Karthik Nandakumar and Muhammad Haris Khan},
+  title     = {Calibration-Aware Prompt Learning for Medical Vision-Language Models},
+  booktitle = {36th British Machine Vision Conference 2025, BMVC 2025, Sheffield, UK, November 24-27, 2025},
+  publisher = {BMVA},
+  year      = {2025},
+  url       = {https://bmva-archive.org.uk/bmvc/2025/assets/papers/Paper_1062/paper.pdf}
+}</code></pre>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Contact: <a href="mailto:abhishek.basu@mbzuai.ac.ae">abhishek.basu@mbzuai.ac.ae</a> · <a href="https://github.com/iabh1shekbasu/CalibPrompt">GitHub</a></p>
+    <p>Built on <a href="https://github.com/KaiyangZhou/CoOp">CoOp</a>, <a href="https://github.com/KaiyangZhou/Dassl.pytorch">Dassl</a>, <a href="https://github.com/ml-stat-Sustech/CLIP_Calibration">CLIP_Calibration</a>, and <a href="https://github.com/asif-hanif/baple">BAPLe</a>. Released under the MIT License.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme(){
+    var r=document.documentElement;
+    var cur=r.getAttribute('data-theme');
+    var next = cur ? (cur==='dark'?'light':'dark')
+                   : (window.matchMedia('(prefers-color-scheme: dark)').matches?'light':'dark');
+    r.setAttribute('data-theme', next);
+  }
+  function copyBib(btn){
+    var t=document.getElementById('bib').innerText;
+    navigator.clipboard.writeText(t).then(function(){btn.innerText='Copied ✓';setTimeout(function(){btn.innerText='Copy';},1600);});
+  }
+</script>
+</body>
+</html>

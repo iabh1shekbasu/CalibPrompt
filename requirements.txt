@@ -1,0 +1,24 @@
+# CalibPrompt dependencies (install PyTorch and Dassl.pytorch separately via setup_env.sh)
+#
+# Vision-language backbones (MedCLIP / BioMedCLIP / PLIP / QuiltNet use the vendored
+# models/open_clip + models/medclip packages, which depend on the libraries below).
+transformers==4.23.1
+timm==0.6.11
+huggingface_hub
+ftfy==6.1.1
+regex
+
+# Calibration metrics and statistics
+netcal
+statsmodels
+scikit-learn
+scipy
+
+# Data, config, and plotting utilities
+pyyaml
+pandas
+numpy
+matplotlib
+tqdm
+packaging
+wget

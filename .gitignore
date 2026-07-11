@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------------------
+# CalibPrompt .gitignore
+# ---------------------------------------------------------------------------
+
+# Byte-compiled / optimized / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.ipynb_checkpoints/
+
+# Distribution / packaging / build artifacts
+build/
+dist/
+develop-eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Editor / OS cruft
+.vscode/
+.idea/
+.DS_Store
+**/.DS_Store
+
+# ---------------------------------------------------------------------------
+# Datasets (never commit medical images or the data root)
+# ---------------------------------------------------------------------------
+/DATA
+/med-datasets/
+/data/
+
+# ---------------------------------------------------------------------------
+# Pretrained model weights (download via docs/MODELS.md; keep loader code only)
+# ---------------------------------------------------------------------------
+*.pt
+*.pth
+*.bin
+*.ckpt
+*.safetensors
+*.msgpack
+*.zip
+med-vlms/
+models/plip/*.pt
+models/quiltnet/*.pt
+models/clip/openai_clip_vit_b32.pt
+models/clip/clip-vit-base-patch16/
+models/**/pretrained/
+
+# ---------------------------------------------------------------------------
+# Experiment outputs / results / logs
+# ---------------------------------------------------------------------------
+output/
+output*/
+results/
+experiments/
+*.log
+wandb/
+
+# Vendored Dassl build artifacts (the source stays; its build/egg do not)
+Dassl.pytorch/build/
+Dassl.pytorch/*.egg-info/
