@@ -1,6 +1,6 @@
 # Calibration-Aware Prompt Learning for Medical Vision-Language Models
 
-> [**Abhishek Basu**](https://iabh1shekbasu.github.io)¹, [**Fahad Shamshad**](https://scholar.google.com/citations?user=d7QL4wkAAAAJ&hl=en)¹, [**Ashshak Sharifdeen**](https://scholar.google.com/citations?user=rd9zSX8AAAAJ&hl=en)¹, [**Karthik Nandakumar**](https://www.cse.msu.edu/~nandakum/)¹ﾧ², [**Muhammad Haris Khan**](https://m-haris-khan.com)¹
+> [**Abhishek Basu**](https://iabh1shekbasu.github.io)¹, [**Fahad Shamshad**](https://scholar.google.com/citations?user=d7QL4wkAAAAJ&hl=en)¹, [**Ashshak Sharifdeen**](https://scholar.google.com/citations?user=rd9zSX8AAAAJ&hl=en)¹, [**Karthik Nandakumar**](https://www.cse.msu.edu/~nandakum/)¹², [**Muhammad Haris Khan**](https://m-haris-khan.com)¹
 >
 > ¹ Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI),&nbsp;UAE &nbsp;&nbsp;·&nbsp;&nbsp; ² Michigan State University (MSU),&nbsp;USA
 
@@ -13,7 +13,7 @@
 <hr>
 
 ## 📢 Latest Updates
-- **[Oct 2025]** ✅ **Full code release** — training, evaluation, configs, and the plug-and-play calibration losses. Every reported number is exactly reproducible (see [Results](#-results)).
+- **[11 July 2026]** ✅ **Full code release** — training, evaluation, configs, and the plug-and-play calibration losses. Every reported number is exactly reproducible (see [Results](#-results)).
 - **[16 Oct 2025]** ✅ Plug-and-play implementations of the proposed loss functions released.
 - **[19 Sep 2025]** ✅ Short paper accepted to the **SafeMM-AI Workshop @ ICCV 2025** 🎉
 - **[18 Sep 2025]** 📄 Paper released on [arXiv](https://arxiv.org/abs/2509.15226) 🎉
