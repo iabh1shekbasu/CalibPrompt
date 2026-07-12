@@ -86,6 +86,19 @@ cd CalibPrompt
 bash setup_env.sh          # PyTorch 2.1 (cu121) + vendored Dassl.pytorch + dependencies
 ```
 
+**Or use Docker** (pinned environment — reproduces the reference stack with no manual setup; requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)):
+
+```shell
+git clone https://github.com/iabh1shekbasu/CalibPrompt && cd CalibPrompt
+docker build -t calibprompt .
+docker run --gpus all -it \
+  -v /path/to/med-datasets:/data \
+  -v /path/to/models:/models \
+  calibprompt
+# then, inside the container (DATASET_ROOT=/data, MODEL_ROOT=/models are preset):
+bash run/classification/fewshot/all_fewshot_plip.sh 0
+```
+
 <br>
 
 ## 🧩 Models

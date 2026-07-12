@@ -1,0 +1,17 @@
+.git
+.github
+docs
+assets
+media
+output
+output*
+DATA
+med-datasets
+med-vlms
+*.md
+Dockerfile
+.dockerignore
+Dassl.pytorch/build
+Dassl.pytorch/*.egg-info
+**/__pycache__
+*.pyc
