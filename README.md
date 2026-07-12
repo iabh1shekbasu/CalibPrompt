@@ -91,13 +91,14 @@ bash setup_env.sh          # PyTorch 2.1 (cu121) + vendored Dassl.pytorch + depe
 ```shell
 git clone https://github.com/iabh1shekbasu/CalibPrompt && cd CalibPrompt
 docker build -t calibprompt .
-docker run --gpus all -it \
+docker run --gpus all -it --shm-size=8g \
   -v /path/to/med-datasets:/data \
   -v /path/to/models:/models \
   calibprompt
 # then, inside the container (DATASET_ROOT=/data, MODEL_ROOT=/models are preset):
 bash run/classification/fewshot/all_fewshot_plip.sh 0
 ```
+> `--shm-size=8g` (or `--ipc=host`) is required — PyTorch's multi-worker `DataLoader` needs more than Docker's default 64 MB of shared memory, or it crashes with a bus error. Verified: QuiltNet/Kather reproduces exactly (ECE 3.58% / Acc 87.52%) inside the container.
 
 <br>
 
