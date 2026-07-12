@@ -230,7 +230,7 @@ CalibPrompt (**LS + SMAC + AS**) sharply lowers Expected Calibration Error (ECE)
 
 | | PLIP · Kather | PLIP · PanNuke | PLIP · DigestPath | QuiltNet · Kather | QuiltNet · PanNuke | QuiltNet · DigestPath |
 |:--|:--:|:--:|:--:|:--:|:--:|:--:|
-| CE (baseline) | 5.92 | 17.82 | 9.50 | 2.49 | 19.70 | 11.27 |
+| CE (baseline) | 5.92 | 17.82 | 9.50 | **2.49** | 19.70 | 11.27 |
 | **CalibPrompt** | **3.11** | **2.19** | **3.08** | 3.58 | **2.47** | **0.77** |
 
 | | BioMedCLIP · COVID | BioMedCLIP · RSNA18 | MedCLIP · COVID | MedCLIP · RSNA18 |
