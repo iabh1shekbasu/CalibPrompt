@@ -68,6 +68,7 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Qu
 - [Method](#-method)
 - [Run Experiments](#-run-experiments)
 - [Results](#-results)
+- [Reproducibility](#-reproducibility)
 - [Citation](#-citation)
 - [Contact](#-contact)
 - [Acknowledgement](#-acknowledgement)
@@ -238,6 +239,20 @@ CalibPrompt (**LS + SMAC + AS**) sharply lowers Expected Calibration Error (ECE)
 | **CalibPrompt** | **4.69** | **5.74** | **27.41** | **17.14** |
 
 See the [paper](https://arxiv.org/abs/2509.15226) for the full tables (accuracy, additional calibration metrics, focal-loss variants, and ablations). Reproduce any cell with `bash run/classification/fewshot/all_fewshot_<backbone>.sh <gpu>`.
+
+<br>
+
+## 🔁 Reproducibility
+Every reported number reproduces **exactly** on the reference setup below — verified from a fresh clone via **both** `conda`/`setup_env.sh` **and** Docker (all four backbones), and independently on a second machine (NVIDIA A6000 + Intel CPU). Training is deterministic given the fixed seed (`--seed 1`) and the cached few-shot splits.
+
+| | Reference environment |
+|:--|:--|
+| **GPU** | NVIDIA RTX A6000, 48 GB — **Ampere** architecture (driver 580.x) |
+| **CPU** | AMD Ryzen Threadripper 3970X |
+| **OS** | Ubuntu 24.04 LTS |
+| **Stack** | Python 3.10 · PyTorch 2.1.0+cu121 · NumPy 1.26.3 · Dassl 0.6.3 |
+
+> **A note on GPUs.** Docker (and `setup_env.sh`) pin the *software*, but the GPU is still the host's *hardware*. On the **same GPU architecture** (Ampere: A6000 / A100 / RTX 30-series) results are **bit-identical**. On a **different architecture** (e.g. Hopper/B200, Ada/L40S, Volta/V100) expect **very close** numbers and the **same conclusions**, but possibly different last decimals — cuDNN/cuBLAS select architecture-specific kernels and floating-point reduction is not associative. This is inherent to GPU deep learning, not specific to CalibPrompt.
 
 <br>
 
