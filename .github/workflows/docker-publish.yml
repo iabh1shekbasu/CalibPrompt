@@ -1,0 +1,61 @@
+name: Publish Docker image to GHCR
+
+# Builds the Dockerfile and publishes it to
+# ghcr.io/iabh1shekbasu/calibprompt using the built-in GITHUB_TOKEN
+# (no personal access token needed).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - 'Dassl.pytorch/**'
+      - '.github/workflows/docker-publish.yml'
+  release:
+    types: [published]
+  workflow_dispatch:        # manual "Run workflow" button
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: iabh1shekbasu/calibprompt   # must be lowercase for GHCR
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Free up disk space (base image is ~6 GB)
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=torch2.1-cu121
+            type=sha,format=short
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
