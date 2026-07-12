@@ -87,18 +87,18 @@ cd CalibPrompt
 bash setup_env.sh          # PyTorch 2.1 (cu121) + vendored Dassl.pytorch + dependencies
 ```
 
-**Or use Docker** (pinned environment — reproduces the reference stack with no manual setup; requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)):
+**Or use Docker** — the exact reference stack, no dependency install (requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)). Pull the **pre-built image** and run:
 
 ```shell
-git clone https://github.com/iabh1shekbasu/CalibPrompt && cd CalibPrompt
-docker build -t calibprompt .
 docker run --gpus all -it --shm-size=8g \
   -v /path/to/med-datasets:/data \
   -v /path/to/models:/models \
-  calibprompt
+  ghcr.io/iabh1shekbasu/calibprompt:latest
 # then, inside the container (DATASET_ROOT=/data, MODEL_ROOT=/models are preset):
 bash run/classification/fewshot/all_fewshot_plip.sh 0
 ```
+Prefer to build it yourself instead of pulling? Run `docker build -t calibprompt .` in the repo and use `calibprompt` in place of the `ghcr.io/...` image. The image is published from the `Dockerfile` by [GitHub Actions](.github/workflows/docker-publish.yml).
+
 > `--shm-size=8g` (or `--ipc=host`) is required — PyTorch's multi-worker `DataLoader` needs more than Docker's default 64 MB of shared memory, or it crashes with a bus error. Verified: QuiltNet/Kather reproduces exactly (ECE 3.58% / Acc 87.52%) inside the container.
 
 <br>
