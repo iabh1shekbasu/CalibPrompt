@@ -56,7 +56,7 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Qu
 - **First calibration framework for Med-VLMs at the prompt-tuning stage** — tunes only ~0.1% of parameters; encoders stay frozen.
 - **Two plug-and-play calibration losses** ([`trainers/classification/losses.py`](trainers/classification/losses.py)) — **SMAC** and **AS** drop into any CoOp-style prompt-learning pipeline alongside CE / Label Smoothing / Focal Loss.
 - **Broad, reproducible evaluation** — 4 Med-VLMs × 5 datasets, plus 10+ calibration baselines (MDCA, DCA, MMCE, MbLS, LogitNorm, ZS-Norm, Penalty, …), all in one loss registry.
-- **Every reported number reproduces exactly** from this code (verified against the paper's Tables 1–2).
+- **CalibPrompt's results reproduce exactly** from this code (verified cell-by-cell against the paper's Tables 1–2).
 
 <br>
 
@@ -243,7 +243,7 @@ See the [paper](https://arxiv.org/abs/2509.15226) for the full tables (accuracy,
 <br>
 
 ## 🔁 Reproducibility
-Every reported number reproduces **exactly** on the reference setup below — verified from a fresh clone via **both** `conda`/`setup_env.sh` **and** Docker (all four backbones), and independently on a second machine (NVIDIA A6000 + Intel CPU). Training is deterministic given the fixed seed (`--seed 1`) and the cached few-shot splits.
+CalibPrompt's results reproduce **exactly** on the reference setup below — verified from a fresh `git clone` via **both** `conda`/`setup_env.sh` **and** Docker, across all four backbones (PLIP, QuiltNet, MedCLIP, BioMedCLIP), checked cell-by-cell against Tables 1–2 (CalibPrompt and the CE baseline). Training is deterministic given the fixed seed (`--seed 1`) and the cached few-shot splits.
 
 | | Reference environment |
 |:--|:--|
