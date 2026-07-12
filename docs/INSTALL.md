@@ -5,7 +5,7 @@ CalibPrompt is built on the [Dassl.pytorch](https://github.com/KaiyangZhou/Dassl
 ## 1. Create a conda environment
 
 ```shell
-conda create -n calibprompt python=3.9 -y
+conda create -n calibprompt python=3.10 -y
 conda activate calibprompt
 ```
 
@@ -17,11 +17,11 @@ cd CalibPrompt
 bash setup_env.sh
 ```
 
-`setup_env.sh` performs the following steps:
+`setup_env.sh` reproduces the reference environment used for all reported results and performs:
 
-1. Installs PyTorch (`torch==1.13.0+cu116`, `torchvision==0.14.0+cu116`). Change the `--extra-index-url` in `setup_env.sh` to match your CUDA version if needed.
-2. Installs the vendored `Dassl.pytorch` (`pip install -r requirements.txt` + `python setup.py develop`).
-3. Installs the CalibPrompt dependencies from `requirements.txt` (transformers, timm, open-clip deps, netcal, statsmodels, scikit-learn, etc.).
+1. Installs **PyTorch 2.1.0 + CUDA 12.1** (`torch==2.1.0`, `torchvision==0.16.0`). For a different CUDA version, change the `--index-url` in `setup_env.sh` (e.g. `.../whl/cu118`); CPU-only: `.../whl/cpu`.
+2. Installs the CalibPrompt dependencies from `requirements.txt` — **NumPy is pinned to `1.26.3`** (torch 2.1 and Dassl are incompatible with numpy 2.x).
+3. Installs the vendored `Dassl.pytorch` with `pip install -e Dassl.pytorch --no-build-isolation` (its `setup.py` imports numpy at build time, so build isolation must be disabled).
 
 ## 3. Prepare data and models
 

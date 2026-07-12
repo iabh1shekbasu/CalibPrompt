@@ -78,12 +78,12 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Qu
 See [docs/INSTALL.md](docs/INSTALL.md) for details.
 
 ```shell
-conda create -n calibprompt python=3.9 -y
+conda create -n calibprompt python=3.10 -y
 conda activate calibprompt
 
 git clone https://github.com/iabh1shekbasu/CalibPrompt
 cd CalibPrompt
-bash setup_env.sh          # PyTorch + vendored Dassl.pytorch + dependencies
+bash setup_env.sh          # PyTorch 2.1 (cu121) + vendored Dassl.pytorch + dependencies
 ```
 
 <br>

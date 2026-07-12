@@ -2,31 +2,33 @@
 # ---------------------------------------------------------------------------
 # Environment setup for CalibPrompt
 #
-# Recommended: create and activate a fresh conda env first, then run this script:
-#     conda create -n calibprompt python=3.9 -y
+# Matches the reference environment used for all reported results
+# (Python 3.10, PyTorch 2.1.0 + CUDA 12.1, NumPy 1.26).
+#
+#     conda create -n calibprompt python=3.10 -y
 #     conda activate calibprompt
 #     bash setup_env.sh
 #
-# The CUDA 11.6 PyTorch build below matches the paper's setup. Change the
-# --extra-index-url to match your local CUDA version if needed.
+# For a different CUDA version, change the --index-url below
+# (e.g. .../whl/cu118). CPU-only: use .../whl/cpu.
 # ---------------------------------------------------------------------------
 set -e
 
-# 1. PyTorch
-pip install torch==1.13.0+cu116 torchvision==0.14.0+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+# 1. PyTorch (CUDA 12.1 build)
+pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu121
 
-# 2. Dassl.pytorch (dataset + training framework, vendored in this repo)
-cd Dassl.pytorch
+# 2. CalibPrompt dependencies (numpy is pinned <2 here — install before building Dassl)
 pip install -r requirements.txt
-python setup.py develop
-cd ..
 
-# 3. Pin setuptools for compatibility with the pinned deps
-pip install setuptools==59.5.0
+# 3. Dassl.pytorch (vendored framework).
+#    --no-build-isolation lets Dassl's setup.py (which imports numpy at build time)
+#    see the numpy we just installed, instead of failing in an isolated build env.
+pip install -r Dassl.pytorch/requirements.txt
+pip install -e Dassl.pytorch --no-build-isolation
 
-# 4. CalibPrompt dependencies
-pip install -r requirements.txt
+# 4. Re-assert the pinned NumPy in case a transitive dep bumped it
+pip install "numpy==1.26.3"
 
 echo ""
-echo "CalibPrompt environment ready."
-echo "Next: download the datasets (docs/DATASETS.md) and the pretrained Med-VLMs (docs/MODELS.md)."
+echo "CalibPrompt environment ready — torch $(python -c 'import torch; print(torch.__version__)'), numpy $(python -c 'import numpy; print(numpy.__version__)')."
+echo "Next: download datasets (docs/DATASETS.md) and pretrained Med-VLMs (docs/MODELS.md)."
