@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CalibPrompt · Calibration-Aware Prompt Learning for Medical Vision-Language Models (BMVC 2025)</title>
 <meta name="description" content="CalibPrompt (BMVC 2025): the first framework to calibrate Medical Vision-Language Models during prompt tuning, via the SMAC and Angular Separation losses.">
-<meta property="og:title" content="CalibPrompt — Calibration-Aware Prompt Learning for Medical Vision-Language Models">
+<meta property="og:title" content="CalibPrompt: Calibration-Aware Prompt Learning for Medical Vision-Language Models">
 <meta property="og:description" content="BMVC 2025. Calibrating Med-VLMs during prompt tuning with SMAC + Angular Separation losses.">
 <meta property="og:image" content="static/method.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -98,7 +98,7 @@
     <div class="awards">
       <span class="pill">🎓 BMVC 2025</span>
       <span class="pill">🛡️ SafeMM-AI @ ICCV 2025</span>
-      <span class="pill">🏆 Best Poster — MBZUAI Research Showcase 2025</span>
+      <span class="pill">🏆 Best Poster, MBZUAI Research Showcase 2025</span>
     </div>
   </div>
 </header>
@@ -107,7 +107,7 @@
   <section id="overview" style="border-top:none">
     <figure>
       <img src="static/method.png" alt="CalibPrompt overview">
-      <figcaption><b>Overview of CalibPrompt.</b> Learnable prompts are optimized with classification and calibration losses — <b>SMAC</b> and <b>AS</b> — while the image and text encoders stay frozen.</figcaption>
+      <figcaption><b>Overview of CalibPrompt.</b> Learnable prompts are optimized with classification and calibration losses (<b>SMAC</b> and <b>AS</b>) while the image and text encoders stay frozen.</figcaption>
     </figure>
   </section>
 
@@ -136,7 +136,7 @@
 
   <section id="results">
     <h2><span class="bar"></span>Results</h2>
-    <p class="lead">CalibPrompt sharply reduces Expected Calibration Error (ECE) versus vanilla CE prompt tuning, across all four Med-VLMs and five datasets — while keeping accuracy intact. All numbers are <b>exactly reproducible</b> from the released code.</p>
+    <p class="lead">CalibPrompt sharply reduces Expected Calibration Error (ECE) versus vanilla CE prompt tuning, across all four Med-VLMs and five datasets, while keeping accuracy intact. The numbers are reproducible from the released code on the reference setup.</p>
     <figure>
       <img src="static/results.png" alt="ECE: CalibPrompt vs CE prompt-tuning">
     </figure>

@@ -13,7 +13,7 @@
 <hr>
 
 ## 📢 Latest Updates
-- **[11 July 2026]** ✅ **Full code release** — training, evaluation, configs, and the plug-and-play calibration losses. Every reported number is exactly reproducible (see [Results](#-results)).
+- **[11 July 2026]** ✅ **Full code release**: training, evaluation, configs, and the plug-and-play calibration losses. See [Results](#-results).
 - **[16 Oct 2025]** ✅ Plug-and-play implementations of the proposed loss functions released.
 - **[19 Sep 2025]** ✅ Short paper accepted to the **SafeMM-AI Workshop @ ICCV 2025** 🎉
 - **[18 Sep 2025]** 📄 Paper released on [arXiv](https://arxiv.org/abs/2509.15226) 🎉
@@ -35,12 +35,12 @@
   <img src="assets/calibprompt_method.png" width="95%" alt="CalibPrompt overview">
 </p>
 
-Medical Vision-Language Models (Med-VLMs) achieve strong zero-shot performance on clinical tasks, but they are often **miscalibrated** — their confidence scores do not reflect the true likelihood of correctness. In high-stakes clinical settings, such overconfident errors undermine trust and safe decision-making.
+Medical Vision-Language Models (Med-VLMs) achieve strong zero-shot performance on clinical tasks, but they are often **miscalibrated**: their confidence scores do not reflect the true likelihood of correctness. In high-stakes clinical settings, such overconfident errors undermine trust and safe decision-making.
 
 We introduce **CalibPrompt**, the *first* framework to calibrate Med-VLMs **during prompt tuning** (rather than as a post-hoc fix). Keeping the image and text encoders frozen, CalibPrompt learns only a small set of text-prompt tokens (~**0.1%** of parameters) under a scarce-labeled-data regime, optimizing a task loss together with two lightweight calibration objectives:
 
-- **SMAC** — *Smoothed Accuracy and Confidence Matching*: aligns each class's mean predicted confidence with a smoothed empirical class frequency, tolerating the inherent ambiguity of medical images.
-- **AS** — *Angular Separation loss*: spreads the class text prototypes apart (minimizes their pairwise cosine similarity), directly countering the overconfidence caused by prompt tuning.
+- **SMAC** (*Smoothed Accuracy and Confidence Matching*): aligns each class's mean predicted confidence with a smoothed empirical class frequency, tolerating the inherent ambiguity of medical images.
+- **AS** (*Angular Separation loss*): spreads the class text prototypes apart (minimizes their pairwise cosine similarity), directly countering the overconfidence caused by prompt tuning.
 
 CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, QuiltNet, MedCLIP, BioMedCLIP) and **five medical datasets** (COVID, RSNA18, Kather, PanNuke, DigestPath), with minimal impact on accuracy.
 
@@ -53,10 +53,10 @@ CalibPrompt consistently improves calibration across **four Med-VLMs** (PLIP, Qu
 <br>
 
 ## ✨ Highlights
-- **First calibration framework for Med-VLMs at the prompt-tuning stage** — tunes only ~0.1% of parameters; encoders stay frozen.
-- **Two plug-and-play calibration losses** ([`trainers/classification/losses.py`](trainers/classification/losses.py)) — **SMAC** and **AS** drop into any CoOp-style prompt-learning pipeline alongside CE / Label Smoothing / Focal Loss.
-- **Broad, reproducible evaluation** — 4 Med-VLMs × 5 datasets, plus 10+ calibration baselines (MDCA, DCA, MMCE, MbLS, LogitNorm, ZS-Norm, Penalty, …), all in one loss registry.
-- **CalibPrompt's results reproduce exactly** from this code (verified cell-by-cell against the paper's Tables 1–2).
+- **First calibration framework for Med-VLMs at the prompt-tuning stage.** Tunes only ~0.1% of parameters; encoders stay frozen.
+- **Two plug-and-play calibration losses** ([`trainers/classification/losses.py`](trainers/classification/losses.py)). **SMAC** and **AS** drop into any CoOp-style prompt-learning pipeline alongside CE / Label Smoothing / Focal Loss.
+- **Broad, reproducible evaluation.** 4 Med-VLMs × 5 datasets, plus 10+ calibration baselines (MDCA, DCA, MMCE, MbLS, LogitNorm, ZS-Norm, Penalty, and more), all in one loss registry.
+- **Reproducible on the reference setup** from this code (see [Reproducibility](#-reproducibility)).
 
 <br>
 
@@ -87,7 +87,7 @@ cd CalibPrompt
 bash setup_env.sh          # PyTorch 2.1 (cu121) + vendored Dassl.pytorch + dependencies
 ```
 
-**Or use Docker** — the exact reference stack, no dependency install (requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)). Pull the **pre-built image** and run:
+**Or use Docker** for the exact reference stack, no dependency install (requires the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)). Pull the **pre-built image** and run:
 
 ```shell
 docker run --gpus all -it --shm-size=8g \
@@ -99,12 +99,12 @@ bash run/classification/fewshot/all_fewshot_plip.sh 0
 ```
 Prefer to build it yourself instead of pulling? Run `docker build -t calibprompt .` in the repo and use `calibprompt` in place of the `ghcr.io/...` image. The image is published from the `Dockerfile` by [GitHub Actions](.github/workflows/docker-publish.yml).
 
-> `--shm-size=8g` (or `--ipc=host`) is required — PyTorch's multi-worker `DataLoader` needs more than Docker's default 64 MB of shared memory, or it crashes with a bus error. Verified: QuiltNet/Kather reproduces exactly (ECE 3.58% / Acc 87.52%) inside the container.
+> `--shm-size=8g` (or `--ipc=host`) is required. PyTorch's multi-worker `DataLoader` needs more than Docker's default 64 MB of shared memory, otherwise it crashes with a bus error. Verified inside the container on QuiltNet/Kather (ECE 3.58% / Acc 87.52%).
 
 <br>
 
 ## 🧩 Models
-CalibPrompt is evaluated on four medical foundation models. Download the pretrained weights (see [docs/MODELS.md](docs/MODELS.md) for links + the exact layout) and set `MODEL_ROOT`. BioMedCLIP downloads automatically from the HuggingFace Hub.
+CalibPrompt is evaluated on four medical foundation models. Download the pretrained weights (see [docs/MODELS.md](docs/MODELS.md) for links plus the exact layout) and set `MODEL_ROOT`. BioMedCLIP downloads automatically from the HuggingFace Hub.
 
 | Model | Modality | Datasets | Source |
 |:--|:--|:--|:--|
@@ -126,7 +126,7 @@ Five public medical classification datasets, using the **same sources and prepro
 | [PanNuke](https://warwick.ac.uk/fac/cross_fac/tia/data/pannuke) | Histopathology | 2 | Warwick TIA |
 | [DigestPath](https://drive.google.com/drive/folders/1_19Nz7mPuLReYA60UAtcnsAotTqZk0Je) | Histopathology | 2 | DigestPath 2019 |
 
-Place datasets under a directory pointed to by `DATASET_ROOT` (each as `<name>/images/{train,test}/<class>/` + `classnames.txt`).
+Place datasets under a directory pointed to by `DATASET_ROOT` (each as `<name>/images/{train,test}/<class>/` plus `classnames.txt`).
 
 <br>
 
@@ -149,7 +149,7 @@ CalibPrompt/
 │   ├── base_learner.py               # shared train/eval loop
 │   └── losses.py                     # ★ loss registry: SMAC, AS + CE/LS/FL/MDCA/DCA/MMCE/MbLS/LogitNorm/...
 ├── datasets/                         # Dassl dataset loaders
-├── models/                           # backbone code (clip, open_clip, medclip) — weights downloaded separately
+├── models/                           # backbone code (clip, open_clip, medclip); weights downloaded separately
 ├── tools/metrics.py                  # calibration metrics (ECE / MCE / ACE / KDE-ECE)
 ├── evaluators/vl_evaluator.py        # calibration-aware vision-language evaluator
 ├── scripts/classification/           # per-backbone launcher scripts (call train.py)
@@ -158,7 +158,7 @@ CalibPrompt/
 └── assets/                           # figures
 ```
 
-> **Plug-and-play losses.** The SMAC and AS losses live in [`trainers/classification/losses.py`](trainers/classification/losses.py) as a `LossRegistry`. Enable any combination via `TRAINER.COOP.LOSS.ENABLED_LOSSES` in a config — no other code changes needed.
+> **Plug-and-play losses.** The SMAC and AS losses live in [`trainers/classification/losses.py`](trainers/classification/losses.py) as a `LossRegistry`. Enable any combination via `TRAINER.COOP.LOSS.ENABLED_LOSSES` in a config, with no other code changes needed.
 
 <br>
 
@@ -199,7 +199,7 @@ To reproduce a baseline instead, set `ENABLED_LOSSES` to a single method, e.g. `
 <br>
 
 ## 🚀 Run Experiments
-Point the environment variables at your data and weights (or edit the defaults at the top of the scripts), then launch — the only argument is the GPU id:
+Point the environment variables at your data and weights (or edit the defaults at the top of the scripts), then launch. The only argument is the GPU id:
 
 ```shell
 export DATASET_ROOT=/path/to/med-datasets    # default: ./med-datasets
@@ -220,13 +220,13 @@ Each driver loops over its datasets/seeds, calls `train.py`, and aggregates cali
 <br>
 
 ## 📊 Results
-CalibPrompt (**LS + SMAC + AS**) sharply lowers Expected Calibration Error (ECE) versus vanilla CE prompt tuning, while keeping accuracy intact. **The numbers below reproduce exactly from this code** (verified against the paper's Tables 1–2).
+CalibPrompt (**LS + SMAC + AS**) sharply lowers Expected Calibration Error (ECE) versus vanilla CE prompt tuning, while keeping accuracy intact. The numbers below are produced by this code on the reference setup (see [Reproducibility](#-reproducibility)).
 
 <p align="center">
   <img src="assets/results.png" width="100%" alt="ECE: CalibPrompt vs CE prompt-tuning">
 </p>
 
-**Expected Calibration Error (%, ↓)** — CE prompt-tuning → CalibPrompt:
+**Expected Calibration Error (%, ↓), CE prompt-tuning vs CalibPrompt:**
 
 | | PLIP · Kather | PLIP · PanNuke | PLIP · DigestPath | QuiltNet · Kather | QuiltNet · PanNuke | QuiltNet · DigestPath |
 |:--|:--:|:--:|:--:|:--:|:--:|:--:|
@@ -243,16 +243,16 @@ See the [paper](https://arxiv.org/abs/2509.15226) for the full tables (accuracy,
 <br>
 
 ## 🔁 Reproducibility
-CalibPrompt's results reproduce **exactly** on the reference setup below — verified from a fresh `git clone` via **both** `conda`/`setup_env.sh` **and** Docker, across all four backbones (PLIP, QuiltNet, MedCLIP, BioMedCLIP), checked cell-by-cell against Tables 1–2 (CalibPrompt and the CE baseline). Training is deterministic given the fixed seed (`--seed 1`) and the cached few-shot splits.
+CalibPrompt's results reproduce on the reference setup below, verified from a fresh `git clone` via both `conda`/`setup_env.sh` and Docker across all four backbones (PLIP, QuiltNet, MedCLIP, BioMedCLIP). Training is deterministic given the fixed seed (`--seed 1`) and the cached few-shot splits, so runs on the same setup match.
 
 | | Reference environment |
 |:--|:--|
-| **GPU** | NVIDIA RTX A6000, 48 GB — **Ampere** architecture (driver 580.x) |
+| **GPU** | NVIDIA RTX A6000, 48 GB, **Ampere** architecture (driver 580.x) |
 | **CPU** | AMD Ryzen Threadripper 3970X |
 | **OS** | Ubuntu 24.04 LTS |
 | **Stack** | Python 3.10 · PyTorch 2.1.0+cu121 · NumPy 1.26.3 · Dassl 0.6.3 |
 
-> **A note on GPUs.** Docker (and `setup_env.sh`) pin the *software*, but the GPU is still the host's *hardware*. On the **same GPU architecture** (Ampere: A6000 / A100 / RTX 30-series) results are **bit-identical**. On a **different architecture** (e.g. Hopper/B200, Ada/L40S, Volta/V100) expect **very close** numbers and the **same conclusions**, but possibly different last decimals — cuDNN/cuBLAS select architecture-specific kernels and floating-point reduction is not associative. This is inherent to GPU deep learning, not specific to CalibPrompt.
+> **A note on GPUs.** Docker and `setup_env.sh` pin the *software*, but the GPU itself is host hardware. Metrics can move slightly across different GPUs and driver stacks (cuDNN/cuBLAS pick hardware-specific kernels, and floating-point reduction is not associative), while the conclusions and the gains of CalibPrompt over the baselines hold. This is inherent to GPU deep learning, not specific to CalibPrompt.
 
 <br>
 
@@ -274,9 +274,9 @@ If you find CalibPrompt useful, please consider citing:
 
 ## 📧 Contact
 For questions, please open an issue or contact:
-- **Abhishek Basu** — abhishek.basu@mbzuai.ac.ae
-- **Fahad Shamshad** — fahad.shamshad@mbzuai.ac.ae
-- **Ashshak Sharifdeen** — ashshak.sharifdeen@mbzuai.ac.ae
+- **Abhishek Basu** · abhishek.basu@mbzuai.ac.ae
+- **Fahad Shamshad** · fahad.shamshad@mbzuai.ac.ae
+- **Ashshak Sharifdeen** · ashshak.sharifdeen@mbzuai.ac.ae
 
 <br>
 
